@@ -1,4 +1,3 @@
-// useDeleteAlert.js
 import Swal from 'sweetalert2';
 
 const useDeleteAlert = () => {
@@ -11,7 +10,7 @@ const useDeleteAlert = () => {
       confirmButtonColor: '#d33',
       cancelButtonColor: '#3085d6',
       confirmButtonText: 'Hapus!',
-      reverseButtons: true, // Menukar posisi tombol
+      reverseButtons: true, 
     }).then((result) => {
       if (result.isConfirmed) {
         

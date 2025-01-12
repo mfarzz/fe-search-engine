@@ -1,9 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Search} from 'lucide-react';
-import Logo from './logo';
+import { Search } from 'lucide-react';
 
-
-const SearchComponent = () => {
+const SearchLink = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
   const [recentSearches, setRecentSearches] = useState([
@@ -16,11 +14,10 @@ const SearchComponent = () => {
     'preline ui',
     'github'
   ]);
-  
+
   const [suggestions, setSuggestions] = useState([]);
   const searchRef = useRef(null);
 
-  // Mock suggestions - in a real app, this would come from an API
   const mockSuggestions = [
     'react tutorial',
     'react native',
@@ -44,9 +41,9 @@ const SearchComponent = () => {
   const handleSearchChange = (e) => {
     const value = e.target.value;
     setSearchTerm(value);
-    
+
     if (value.trim()) {
-      const filtered = mockSuggestions.filter(item => 
+      const filtered = mockSuggestions.filter(item =>
         item.toLowerCase().includes(value.toLowerCase())
       );
       setSuggestions(filtered);
@@ -65,30 +62,29 @@ const SearchComponent = () => {
 
   return (
     <div className="w-full max-w-2xl mx-auto pt-4" ref={searchRef}>
-     <Logo/>
-      <div 
-        className={`bg-white rounded-3xl ${
+      <div
+        className={`bg-white rounded-3xl mt-10 text-white border-2 border-blue-200 ${
           isOpen ? 'shadow-lg' : 'hover:shadow-md'
-        } transition-shadow duration-200`}
+        } transition-shadow duration-200 relative`}
       >
-        {/* Search Container */}
-        <div className="relative">
-          {/* Search Input Area */}
-          <div className="flex items-center px-4 py-3">
-            <Search className="w-5 h-5 text-gray-400" />
-            <input
-              type="text"
-              className="flex-1 px-4 outline-none text-gray-700 bg-transparent"
-              placeholder="Search Google or type a URL"
-              value={searchTerm}
-              onChange={handleSearchChange}
-              onFocus={() => setIsOpen(true)}
-              onKeyDown={(e) => e.key === 'Enter' && handleSearch(searchTerm)}
-            />
-          </div>
+        <div className="flex items-center px-4 py-3 border-blue">
+          <Search className="w-5 h-5 text-gray-400" />
+          <input
+            type="text"
+            className="flex-1 px-4 outline-none text-gray-700 bg-transparent"
+            placeholder="Search or type a URL"
+            value={searchTerm}
+            onChange={handleSearchChange}
+            onFocus={() => setIsOpen(true)}
+            onKeyDown={(e) => e.key === 'Enter' && handleSearch(searchTerm)}
+          />
+        </div>
 
-          {/* Suggestions */}
-          {isOpen && (
+        {isOpen && (
+          <div
+            className="absolute top-full left-0 w-full bg-white shadow-lg z-10 rounded-lg mt-2"
+            style={{ maxHeight: '300px', overflowY: 'auto' }}
+          >
             <div className="px-2 pb-2">
               <div className="h-px bg-gray-100 mx-2 mb-2" />
               {(!searchTerm ? recentSearches : suggestions).map((item, index) => (
@@ -102,11 +98,11 @@ const SearchComponent = () => {
                 </div>
               ))}
             </div>
-          )}
-        </div>
+          </div>
+        )}
       </div>
     </div>
   );
 };
 
-export default SearchComponent;
+export default SearchLink;

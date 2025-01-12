@@ -1,6 +1,6 @@
 import React from 'react';
 
-const Input = ({ label = "Input", value, onChange, placeholder, required, name }) => {
+const Input = ({ label, value, onChange, placeholder, required, name }) => {
     return (
         <div className="max-w-sm">
             <label htmlFor="input-label" className="block text-sm font-bold mb-2 text-white">

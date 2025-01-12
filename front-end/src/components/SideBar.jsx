@@ -1,39 +1,24 @@
-import React, { useState } from "react";
+// Sidebar.js
+import React from "react";
 import { Menu, X, Home, Settings, User, LogOut, ChartColumnBig, Link, TableOfContents } from "lucide-react";
-import auth from "../services/auth.service";
-import ProtectedRoute from "../ProtectedRoute";
-import { jwtDecode } from "jwt-decode";
+import useSidebar from "../hooks/useSidebar"; 
+import useLogout from "../hooks/useLogout"; 
 
 const Sidebar = ({ role }) => {
-  const [isOpen, setIsOpen] = useState(false);
-
-  const toggleSidebar = () => {
-    setIsOpen(!isOpen);
-  };
-
-  const handleLogout = async () => {
-    try {
-      await auth.logout(); // Panggil service logout
-      window.location.href = "/"; // Redirect ke halaman login atau beranda
-    } catch (error) {
-      console.error("Logout Error:", error);
-      alert("Gagal logout. Silakan coba lagi.");
-    }
-  };
+  const { isOpen, toggleSidebar } = useSidebar(); 
+  const handleLogout = useLogout(); 
 
   const adminMenuItems = [
     { title: "Home", icon: Home, route: "/home" },
     { title: "Dashboard", icon: ChartColumnBig, route: "/dashboard" },
     { title: "Manajemen Link", icon: Link, route: "/link" },
     { title: "Akun User", icon: User, route: "/user" },
-    { title: "Logout", icon: LogOut, action: async () => handleLogout() },
   ];
 
   const userMenuItems = [
     { title: "Home", icon: Home, route: "/home" },
     { title: "Manajemen Link", icon: Link, route: "/link" },
     { title: "FAQ", icon: TableOfContents, route: "/faq" },
-    { title: "Logout", icon: LogOut, action: async () => handleLogout() },
   ];
 
   const menuItems = role === "admin" ? adminMenuItems : userMenuItems;
@@ -58,9 +43,9 @@ const Sidebar = ({ role }) => {
       <div
         className={`fixed top-0 left-0 h-screen bg-white shadow-lg z-50 transition-transform duration-300 transform ${
           isOpen ? "translate-x-0" : "-translate-x-full"
-        } w-72`}
+        } w-72 flex flex-col`}
       >
-        <div className="h-full overflow-y-auto p-4 ml-5 mt-5">
+        <div className="h-full overflow-y-auto p-4 ml-5 mt-5 flex-grow">
           <h2 className="text-2xl font-bold text-gray-800 mb-6 mt-12">
             <div className="grid grid-cols-[auto,1fr] gap-2 items-center">
               <div className="w-12">
@@ -80,7 +65,6 @@ const Sidebar = ({ role }) => {
                 return (
                   <li key={index}>
                     {item.action ? (
-                      // Jika menu memiliki action, panggil fungsi
                       <button
                         onClick={item.action}
                         className="flex items-center gap-4 w-full text-left p-3 text-gray-700 hover:bg-blue-premier hover:text-white rounded-lg transition-colors"
@@ -89,7 +73,6 @@ const Sidebar = ({ role }) => {
                         <span>{item.title}</span>
                       </button>
                     ) : (
-                      // Jika menu memiliki route, gunakan anchor tag
                       <a
                         href={item.route}
                         className="flex items-center gap-4 p-3 text-gray-700 hover:bg-blue-premier hover:text-white rounded-lg transition-colors"
@@ -103,6 +86,17 @@ const Sidebar = ({ role }) => {
               })}
             </ul>
           </nav>
+        </div>
+
+        {/* Logout Button at the bottom */}
+        <div className="p-4">
+          <button
+            onClick={handleLogout}
+            className="flex items-center gap-4 w-full text-left p-3 ml-6 hover:text-blue-premier hover:font-bold text-gray-700 rounded-lg transition-colors"
+          >
+            <LogOut className="" />
+            <span>Logout</span>
+          </button>
         </div>
       </div>
     </div>

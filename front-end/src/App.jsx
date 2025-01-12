@@ -3,15 +3,13 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-d
 import './index.css';
 
 // Import pages
-import Home from './pages/homePages.jsx';
-import Login from './pages/login.jsx';
-import Dashboard from './pages/dashboard.jsx';
-import User from './pages/user.jsx';
-import TambahUser from './pages/tambahUser.jsx';
-import Link from './pages/link.jsx';
-import TambahLink from './pages/tambahLink.jsx';
-import FAQ from './pages/faq.jsx';
-import Result from './pages/resultSearch.jsx';
+import Home from './pages/HomePages.jsx';
+import Login from './pages/LoginPages.jsx';
+import Dashboard from './pages/DashboardPages.jsx';
+import User from './pages/UserPages.jsx';
+import Link from './pages/LinkPages.jsx';
+import FAQ from './pages/FAQPages.jsx';
+import Result from './pages/ResultSearchPages.jsx';
 import ProtectedRoute from './ProtectedRoute.jsx';
 
 function App() {
@@ -72,14 +70,7 @@ function App() {
           }
         />
 
-        <Route
-          path="/tambahUser"
-          element={
-            <ProtectedRoute isAuthenticated={isAuthenticated} roles={["admin"]} >
-              <TambahUser />
-            </ProtectedRoute>
-          }
-        />
+       
 
         <Route
           path="/link"
@@ -90,14 +81,7 @@ function App() {
           }
         />
 
-        <Route
-          path="/tambahLink"
-          element={
-            <ProtectedRoute isAuthenticated={isAuthenticated} roles={["admin", "user"]}>
-              <TambahLink />
-            </ProtectedRoute>
-          }
-        />
+        
 
         <Route
           path="/faq"

@@ -1,7 +1,7 @@
 // src/services/auth.service.js
 import axios from 'axios';
 
-const API_URL = 'http://localhost:5000/auth';
+const API_URL = 'http://localhost:4000/auth';
 
 // Create axios instance with default config
 const axiosInstance = axios.create({

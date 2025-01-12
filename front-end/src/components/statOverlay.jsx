@@ -1,7 +1,7 @@
 import React from 'react';
 
 
-const StatsWithOverlay = ({ label = "label", jumlah = "100", ikon: Ikon, keterangan = "Keterangan" }) => {
+const StatsWithOverlay = ({ label, jumlah, ikon: Ikon, keterangan }) => {
     return (
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 gap-6 p-6 bg-white-100">
         <div className="flex items-center justify-between p-4 bg-white rounded-lg shadow-lg hover:shadow-2xl  transition-all duration-300 ease-in-out transform hover:translate-y-[-10px] hover:z-50">

@@ -1,8 +1,9 @@
 import { useState, useEffect } from 'react'
 import CELLS from 'vanta/dist/vanta.cells.min'
-import SearchLink from '../components/Search'
+import SearchLink from '../components/SearchLink'
 import Sidebar from '../components/SideBar'
 import {jwtDecode} from 'jwt-decode'
+import Logo from '../components/Logo'
 
 function App() {
   useEffect(() => {
@@ -36,6 +37,9 @@ function App() {
     <div className='m-0 p-0'>
       <div className='w-screen h-screen' id='vanta'> 
         <div className='p-20'>
+          <div className="">
+          <Logo />
+          </div>
           <SearchLink /> 
           <Sidebar role={role} />
         </div>

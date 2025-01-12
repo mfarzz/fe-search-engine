@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from "react";
-import Navbar from "../components/navbar";
-import StatsWithOverlay from "../components/statOverlay";
+import StatsWithOverlay from "../components/StatOverlay";
 import Sidebar from "../components/SideBar";
 import { UserRound, Link, ChartColumnBig } from 'lucide-react';
 import {jwtDecode} from "jwt-decode";
 import admin_controller from "../services/admin.service";
+import Navbar from "../components/Navbar";
+import Feedback from "../components/Feedback";
 
 function Dashboard() {
     const [role, setRole] = useState("");
@@ -36,7 +37,7 @@ function Dashboard() {
             </div>
 
             
-            <div className="stats ml-8 mr-8 mt-5">
+            <div className="stats ml-8 mr-8 mt-20">
                 <div className="grid grid-cols-3 gap-0">
                     <div className="text-blue-sky ">
                         <StatsWithOverlay label="Pengguna" ikon={UserRound} jumlah="100" keterangan="Orang"/>

@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
-import ButtonGreen from "../components/btnGreen";
-import Input from "../components/input";
+import ButtonGreen from "../components/Button";
+import Input from "../components/Input";
 import Bps from "../components/bps";
-import Password from "../components/togglePassword";
+import Password from "../components/TogglePassword";
 import { useNavigate } from "react-router-dom";
 import auth from "../services/auth.service";
 
@@ -63,7 +63,7 @@ const Login = ({setIsAuthenticated}) => {
             <div className="ml-5">
               <Input
                 id="username"
-                // label="Input"
+                label="Email"
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
                 placeholder="Enter Username"

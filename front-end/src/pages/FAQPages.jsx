@@ -1,7 +1,8 @@
 import React from "react";
-import Accordion from "../components/accordion";
-import Navbar from "../components/navbar";
+import Accordion from "../components/Accordion";
+import Navbar from "../components/Navbar";
 import Sidebar from "../components/SideBar";
+
 
 
 const pertanyaan = [
@@ -23,13 +24,14 @@ const pertanyaan = [
     pertanyaan: "Apakah sistem ini hanya mencakup data dari BPS Sumbar?",
     jawaban: "Ya, sistem ini difokuskan untuk mengakses link yang berkaitan dengan BPS Sumatera Barat. Namun, jika ada data nasional yang relevan dengan Sumatera Barat, link tersebut juga dapat dimasukkan.",
   },
+ 
 ];
 
 function FAQ() {
   return (
     <>
      <Navbar/>
-     <div className="max-w-2xl mx-auto text-center mb-10 lg:mb-14">
+     <div className="max-w-2xl mx-auto text-center mb-10 lg:mb-14 mt-20 p-2">
       <h2 className="text-2xl font-bold md:text-4xl md:leading-tight mt-12">FAQ</h2>
       <p className="mt-1 text-gray-600">Jawaban atas pertanyaan yang paling sering ditanyakan.</p>
     </div><div className="max-w-2xl mx-auto mb-10">

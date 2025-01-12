@@ -36,7 +36,6 @@ const Password = ({value, onChange, placeholder, required}) => {
             strokeLinecap="round"
             strokeLinejoin="round"
           >
-            {/* Icon untuk password yang tersembunyi */}
             <path
               className={!isPasswordVisible ? "block" : "hidden"}
               d="M9.88 9.88a3 3 0 1 0 4.24 4.24"
