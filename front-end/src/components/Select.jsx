@@ -1,12 +1,25 @@
 import React from "react";
 
-const Select = ({ label, options, onChange }) => {
+const Select = ({ label, options, onChange, value, name, required = false }) => {
+  const handleChange = (e) => {
+    // Pass both name and value to parent's onChange handler
+    onChange({
+      target: {
+        name: name,
+        value: e.target.value
+      }
+    });
+  };
+
   return (
     <div className="mb-4">
-      <label className="block text-sm font-medium  mb-2">{label}</label>
+      <label className="block text-sm font-medium mb-2">{label}</label>
       <select
-         className="py-3 px-4 block w-full border-2 border-gray-200 rounded-lg text-sm focus:border-blue-premier focus:ring-blue-premier disabled:opacity-50 disabled:pointer-events-none"
-        onChange={(e) => onChange(e.target.value)}
+        className="py-3 px-4 block w-full border-2 border-gray-200 rounded-lg text-sm focus:border-blue-premier focus:ring-blue-premier disabled:opacity-50 disabled:pointer-events-none"
+        onChange={handleChange}
+        value={value || ""}
+        name={name}
+        required={required}
       >
         <option value="" disabled>
           Pilih {label}

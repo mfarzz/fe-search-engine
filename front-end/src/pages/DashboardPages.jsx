@@ -1,11 +1,8 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import StatsWithOverlay from "../components/StatOverlay";
 import Sidebar from "../components/SideBar";
 import { UserRound, Link, ChartColumnBig } from 'lucide-react';
 import {jwtDecode} from "jwt-decode";
-import admin_controller from "../services/admin.service";
-import Navbar from "../components/Navbar";
-import Feedback from "../components/Feedback";
 
 function Dashboard() {
     const [role, setRole] = useState("");

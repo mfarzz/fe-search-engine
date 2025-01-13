@@ -1,9 +1,7 @@
-import React, {useEffect, useState} from "react";
+import {useEffect, useState} from "react";
 import Table from "../components/TableUser";
 import Sidebar from "../components/SideBar";
-import SearchBox from "../components/SearchBox";
 import Navbar from "../components/Navbar";
-import Pagination from "../components/Pagination";
 import {jwtDecode} from "jwt-decode";
 
 function User () {
@@ -32,7 +30,6 @@ function User () {
                     <Table />
                 </div>
                 <div className="flex justify-end mt-2 mb-3 ">
-                <Pagination/>
             </div>
             
                
