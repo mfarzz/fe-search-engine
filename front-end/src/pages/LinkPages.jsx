@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import Table from "../components/TableUser";
 import Sidebar from "../components/SideBar";
 import SearchBox from "../components/SearchBox";
@@ -33,7 +33,6 @@ function Link () {
                 </div>
                 
                  <div className="flex justify-end mt-2 mb-3 ">
-                            <Pagination/>
                  </div>
                
             </div>

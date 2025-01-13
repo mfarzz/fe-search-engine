@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import ButtonGreen from "../components/Button";
 import Input from "../components/Input";
 import Password from "../components/TogglePassword";

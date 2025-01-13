@@ -1,30 +1,65 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Trash2, Pencil, Plus, X } from "lucide-react";
 import useDeleteAlert from "./DeletedAlert";
 import ButtonGreen from "./Button";
 import SearchBox from "./SearchBox";
-import InputLight from "./inputLight";
+import InputLight from "./InputLight";
 import Select from "./Select";
+import admin_controller from "../services/admin.service";
+import Pagination from "./Pagination";
+import { useNavigate } from "react-router-dom";
 
-const users = [
-  { nama: "Budi", email: "budi@gmail.com", hp: "083183879726", nip: "1234567", jabatan: "Manager", unit: "TI" },
-  { nama: "Ani", email: "ani@gmail.com", hp: "083183879727", nip: "7654321", jabatan: "Staff", unit: "HR" },
-];
-
-const unitKerjaOptions = ["TI", "Umum"];
+const unitKerjaOptions = ["IT", "Umum"];
+const roleOptions = ["user", "admin"];
 
 const TableLink = () => {
   const { deleteAlert } = useDeleteAlert();
   const [isOpen, setIsOpen] = useState(false);
   const [editData, setEditData] = useState(null);
+  const [users, setUsers] = useState([]);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [pagination, setPagination] = useState({ page: 1, totalPages: 1 });
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
+  const [formData, setFormData] = useState({
+    nama: "",
+    nip: "",
+    jabatan: "",
+    unit_kerja: "",
+    username: "",
+    password: "",
+    role: "",
+  });
+  const navigate = useNavigate();
+
+  const loadUsers = async (page=1) => {
+    setLoading(true);
+    try {
+      const data = await admin_controller.listUsers(page);
+      setUsers(data.data);
+      setPagination({
+        page,
+        totalPages: data.pagination.totalPages
+      });
+    } catch (error) {
+      console.error("Failed to load users:", error);
+      setError("Failed to load users. Please try again later.");
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  const handlePageChange = (page) => {
+    loadUsers(page);
+  };
 
   const togglePopup = () => {
     setIsOpen(!isOpen);
     if (isOpen) setEditData(null);
   };
 
-  const handleEdit = (user) => {
-    setEditData(user);
+  const handleEdit = (users) => {
+    setEditData(users);
     setIsOpen(true);
   };
 
@@ -32,10 +67,38 @@ const TableLink = () => {
     deleteAlert(nama);
   };
 
-  const handleChange = (field, value) => {
-    setEditData((prev) => ({ ...prev, [field]: value }));
-  };
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prevData) => ({
+        ...prevData,
+        [name]: value,
+    }));
+};
+  
 
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (!formData.nama || !formData.nip || !formData.username || !formData.password || !formData.role || !formData.unit_kerja || !formData.jabatan) {
+        alert("Please fill in all fields");
+        return; // Stop the function if any field is empty
+    }
+    try {
+        // Panggil addUser dari admin_controller
+        await admin_controller.addUser(formData);
+        togglePopup();
+        loadUsers(1)
+        navigate("/user"); // Navigasi ke halaman /user setelah berhasil menambah user
+    } catch (error) {
+        console.error('Failed to add user:', error);
+    }
+};
+
+
+  useEffect(() => {
+    loadUsers(pagination.page);
+    }, [pagination.page]);
+    
   return (
     <>
       <div className="flex shadow rounded-lg w-full max-w-screen-xl mx-auto">
@@ -57,16 +120,23 @@ const TableLink = () => {
                   <th className="px-6 py-3 text-center text-xs font-medium text-white uppercase">NIP</th>
                   <th className="px-6 py-3 text-center text-xs font-medium text-white uppercase">Jabatan</th>
                   <th className="px-6 py-3 text-center text-xs font-medium text-white uppercase">Unit</th>
+                  <th className="px-6 py-3 text-center text-xs font-medium text-white uppercase">Role</th>
                   <th className="px-6 py-3 text-center text-xs font-medium text-white uppercase">Action</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-gray-200">
-                {users.map((user, index) => (
+                {loading ? (
+                  <tr>
+                    <td colSpan="6" className="text-center py-4">Loading...</td>
+                  </tr>
+                ) : (
+                users.map((user, index) => (
                   <tr key={index} className="hover:bg-gray-100">
                     <td className="px-6 py-4 whitespace-nowrap text-center text-gray-800">{user.nama}</td>
                     <td className="px-6 py-4 whitespace-nowrap text-center text-gray-800">{user.nip}</td>
                     <td className="px-6 py-4 whitespace-nowrap text-center text-gray-800">{user.jabatan}</td>
-                    <td className="px-6 py-4 whitespace-nowrap text-center text-gray-800">{user.unit}</td>
+                    <td className="px-6 py-4 whitespace-nowrap text-center text-gray-800">{user.unit_kerja}</td>
+                    <td className="px-6 py-4 whitespace-nowrap text-center text-gray-800">{user.role}</td>
                     <td className="px-6 py-4 whitespace-nowrap text-center text-sm font-medium">
                       <div className="flex justify-center items-center gap-4">
                         <button
@@ -86,12 +156,20 @@ const TableLink = () => {
                       </div>
                     </td>
                   </tr>
-                ))}
+                )))}
               </tbody>
             </table>
           </div>
         </div>
       </div>
+      {/* Pagination Component */}
+      <div className="flex justify-end mt-4">
+                <Pagination
+                  currentPage={pagination.page}
+                  totalPages={pagination.totalPages}
+                  onPageChange={handlePageChange}
+                />
+              </div>
 
       {isOpen && (
         <>
@@ -106,51 +184,83 @@ const TableLink = () => {
                   <X />
                 </button>
               </div>
+              <form onSubmit={handleSubmit} id="form-user" name="form-user">
               <div className="p-4">
                 <InputLight
                   label="Nama"
                   placeholder="Masukkan Nama"
-                  value={editData?.nama || ""}
-                  onChange={(e) => handleChange("nama", e.target.value)}
-                />
-                <InputLight
-                  label="Email"
-                  placeholder="Masukkan Email"
-                  value={editData?.email || ""}
-                  onChange={(e) => handleChange("email", e.target.value)}
-                />
-                <InputLight
-                  label="No HP"
-                  placeholder="Masukkan Nomor HP"
-                  value={editData?.hp || ""}
-                  onChange={(e) => handleChange("hp", e.target.value)}
+                  name="nama"
+                  id="nama"
+                  value={formData.nama}
+                  onChange={handleChange}
+                  required={true}
                 />
                 <InputLight
                   label="NIP"
                   placeholder="Masukkan NIP"
-                  value={editData?.nip || ""}
-                  onChange={(e) => handleChange("nip", e.target.value)}
+                  name="nip"
+                  id="nip"
+                  value={formData.nip}
+                  onChange={handleChange}
+                  required={true}
                 />
                 <InputLight
                   label="Jabatan"
                   placeholder="Masukkan Jabatan"
-                  value={editData?.jabatan || ""}
-                  onChange={(e) => handleChange("jabatan", e.target.value)}
+                  name="jabatan"
+                  id="jabatan"
+                  value={formData.jabatan}
+                  onChange={handleChange}
+                  required={true}
                 />
                 <div className="mt-2">
                   <Select
                     label="Unit Kerja"
                     options={unitKerjaOptions}
-                    value={editData?.unit || ""}
-                    onChange={(value) => handleChange("unit", value)}
-                    
+                    value={formData.unit_kerja}
+                    onChange={handleChange}
+                    name="unit_kerja"
+                    required={true}
+                  />
+                </div>
+                <InputLight
+                  label="Username"
+                  placeholder="Masukkan Username"
+                  name="username"
+                  id="username"
+                  value={formData.username}
+                  onChange={handleChange}
+                  required={true}
+                />
+                <InputLight
+                  label="Password"
+                  placeholder="Masukkan Password"
+                  name="password"
+                  id="password"
+                  value={formData.password}
+                  onChange={handleChange}
+                  required={true}
+                />
+                <div className="mt-2">
+                  <Select
+                    label="Role"
+                    options={roleOptions}
+                    value={formData.role}
+                    onChange={handleChange}
+                    name="role"
+                    required={true}
                   />
                 </div>
                 
                 <div className="mt-6 flex justify-center">
-                  <ButtonGreen onClick={togglePopup}>Simpan</ButtonGreen>
+                  <ButtonGreen 
+                    type="submit"
+                    name="submit_user"
+                    id="submit_user"
+                  >Simpan</ButtonGreen>
                 </div>
               </div>
+              </form>
             </div>
           </div>
         </>
