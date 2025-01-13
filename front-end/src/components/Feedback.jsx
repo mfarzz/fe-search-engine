@@ -12,7 +12,7 @@ const Feedback = () => {
     <div>
       <button
         onClick={togglePopup}
-        className="fixed bottom-5 right-4 z-50 p-3 bg-green text-white rounded-full hover:bg-white hover:text-green hover:border-green hover:border-2 transition-colors"
+        className="fixed bottom-20 right-4 z-50 p-3  bg-green text-white rounded-full hover:bg-white hover:text-green hover:border-green hover:border-2 transition-colors"
       >
         <MessageCirclePlus size={25} className="w-8 h-8" />
       </button>

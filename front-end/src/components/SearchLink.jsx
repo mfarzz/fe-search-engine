@@ -63,7 +63,7 @@ const SearchLink = () => {
   return (
     <div className="w-full max-w-2xl mx-auto pt-4" ref={searchRef}>
       <div
-        className={`bg-white rounded-3xl mt-10 text-white border-2 border-blue-200 ${
+        className={`bg-white rounded-3xl mt-10 text-white border-2 border-blue-200 shadow-lg ${
           isOpen ? 'shadow-lg' : 'hover:shadow-md'
         } transition-shadow duration-200 relative`}
       >

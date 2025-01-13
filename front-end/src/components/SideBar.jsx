@@ -50,7 +50,7 @@ const Sidebar = ({ role }) => {
             <div className="grid grid-cols-[auto,1fr] gap-2 items-center">
               <div className="w-12">
                 <img
-                  src="src/assets/image.png"
+                  src="src/assets/logo.png"
                   alt="Logo BPS"
                   className="w-full h-auto"
                 />

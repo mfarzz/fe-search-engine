@@ -21,7 +21,7 @@ const Navbar = ({user}) => {
                             fill="none"
                             xmlns="http://www.w3.org/2000/svg"
                         ></svg>
-                        <img src="src/assets/image.png" alt="Logo" className="w-10 h-8 ml-3 mr-1" />
+                        <img src="src/assets/logo.png" alt="Logo" className="w-10 h-8 ml-3 mr-1" />
                         <div className="grid grid-rows-2 grid-flow-col gap-0">
                             <div className="text-xl italic font-bold">BADAN PUSAT STATISTIK</div>
                             <div className="text-base italic font-bold">PROVINSI SUMATERA BARAT</div>

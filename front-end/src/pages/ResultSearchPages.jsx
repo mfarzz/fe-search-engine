@@ -4,13 +4,20 @@ import Navbar from "../components/Navbar";
 import Sidebar from "../components/SideBar";
 import Card from "../components/Card";
 import Feedback from "../components/Feedback";
-import Pagination from "../components/Pagination"
+import Pagination from "../components/pagination";
 import SearchLink from "../components/SearchLink";
-
+import ScrollButton from "../components/Scroll";
 
 import bps1 from "../assets/bps1.jpg";
 
 const data = [
+  {
+    nama: "Test",
+    deskripsi: "Ini adalah deskripsi untuk card pertama.",
+    link: "https://example.com",
+    judul: "Judul Card Pertama",
+    gambar: bps1, 
+  },
   {
     nama: "Test",
     deskripsi: "Ini adalah deskripsi untuk card pertama.",
@@ -59,6 +66,8 @@ function Result() {
            <Pagination/>
         </div>
              <Feedback/>
+             <ScrollButton/>
+
        
         
       </div>
