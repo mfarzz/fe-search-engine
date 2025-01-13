@@ -3,6 +3,7 @@ import StatsWithOverlay from "../components/StatOverlay";
 import Sidebar from "../components/SideBar";
 import { UserRound, Link, ChartColumnBig } from 'lucide-react';
 import {jwtDecode} from "jwt-decode";
+import Navbar from "../components/Navbar";
 
 function Dashboard() {
     const [role, setRole] = useState("");
